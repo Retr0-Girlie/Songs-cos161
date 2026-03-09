@@ -7,7 +7,7 @@ package smartkart;
  * 
  * Attributes:
  * 	-String id		A unique identifier for the product
- * 	-String name	The human readable name of the product
+ * 	-String name		The human readable name of the product
  * 	-double price	The price of the product
  * 	-int stock		The number of the product currently held in stock
  * 
