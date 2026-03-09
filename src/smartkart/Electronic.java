@@ -1,19 +1,39 @@
 package smartkart;
 
+
+/**Electronic
+ * (Maddy)
+ * 
+ * An electronic product at SmartKart
+ * 
+ * Attributes:
+ * 	-String brand	The brand the item was made by
+ * 
+ * Methods:
+ * 	-boolean isEligible(int days)						Checks if an item is eligible for return based on how many days have passed since it was purchased (Eligible up to 15 days)
+ * 	-double processRefund(int count, String condition)	Calculates the refund amount to return to the customer based on the number of products and their condition (10% fee for "Open Box" returns)
+ * 	-String getReturnLabel(String name, String address)	Generates a return label based on the customers info
+ * 	-String calculateTax(int count)						Calculates the tax to be added based on the number of products and the category they belong to (15% tax for electronics)
+ * 	-(Getters & Setters for each attribute)
+ */
 public class Electronic extends Product implements Returnable {
+	
+	private String brand;
 	
 	/**Constructor
 	 * (Maddy)
 	 * 
 	 * @param String id		The items unique identifier
 	 * @param String name	The human-readable name of the item
+	 * @param String brand	The brand the item was made by
 	 * @param double price	The price of the item
 	 * @param int stock		The number of the item currently held in stock
 	 */
-	public Electronic(String id, String name, double price, int stock)
+	public Electronic(String id, String name, String brand, double price, int stock)
 	{
 		this.id = id;
 		this.name = name;
+		this.brand = brand;
 		this.price = price;
 		this.stock = stock;
 	}
@@ -80,6 +100,15 @@ public class Electronic extends Product implements Returnable {
 	public double calculateTax(int count) 
 	{	
 		return (price * count) * 0.15;
+	}
+
+	//Getters & Setters
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 
 }
