@@ -65,7 +65,17 @@ public class Grocery extends Product{
 			return false;	
 		}
 	}
-
+	
+	/**getting info of a product
+	 * (Iris)
+	 * 
+	 * @return String of information about the product
+	 */
+	@Override
+	public String getInfo(){
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\nExpiration date:" + expirationDate + "\n \t ***";
+	}
+	
 	//Getters and Setters
 	public LocalDate getExpirationDate() {
 		return expirationDate;

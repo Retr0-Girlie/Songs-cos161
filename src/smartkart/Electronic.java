@@ -87,6 +87,15 @@ public class Electronic extends Product implements Returnable {
 		return name+"\n"+address+"\n	SmartKart"+"\n	123 Road rd"+"\n	Town, ST, 12345-6789";
 	}
 
+	/**getting info of a product
+	 * (Iris)
+	 * 
+	 * @return String of information about the product
+	 */
+	public String getInfo(){
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\nItem brand:" + brand + "\n \t ***";
+	}
+	
 	/**Calculate Tax
 	 * (Maddy)
 	 * 

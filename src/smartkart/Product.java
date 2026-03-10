@@ -38,7 +38,7 @@ public abstract class Product {
 	 * @return double tax	The tax to be added to the final purchase price
 	 */
 	public abstract double calculateTax(int count);
-	
+		
 	//Concrete Methods
 	
 	/**Purchase
@@ -59,6 +59,16 @@ public abstract class Product {
 			return true;
 		}
 	}
+	
+	/**getting info of a product
+	 * (Iris)
+	 * 
+	 * @return String of information about the product
+	 */
+	public String getInfo(){
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\n \t ***";
+	}
+
 	
 	/**Restock
 	 * (Maddy)
