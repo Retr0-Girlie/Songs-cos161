@@ -1,7 +1,8 @@
 package smartkart;
 
+
 /**Product (Abstract)
- * (Maddy)
+ * (Maddy and occasionally Iris)
  * 
  * A non-descript product at SmartKart
  * 
@@ -68,7 +69,17 @@ public abstract class Product {
 	public String getInfo(){
 		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\n \t ***";
 	}
-
+	
+	/**Is expired
+	 * (Iris)
+	 * 
+	 * allows calling isExpired on all products so that groceries can be weeded out
+	 * 
+	 * @return returns null
+	 */
+	public Boolean isExpired() {
+		return null;
+	}
 	
 	/**Restock
 	 * (Maddy)
