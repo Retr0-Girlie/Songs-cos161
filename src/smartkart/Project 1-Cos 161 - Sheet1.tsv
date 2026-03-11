@@ -1,0 +1,7 @@
+Type	Item ID	Name	Price	Quantity	days till expiration	Brand	Size	Material
+Grocery	125382	Apple	1.19	7	5	Null	Null	Null
+Grocery	125785	Milk	3.95	2	0	Null	Null	Null
+Electronic	236890	HDMI cable	9.89	3	Null	HDMI	Null	Null
+Electronic	236564	HMD Barbie Flip Phone	99.99	5	Null	HMD	Null	Null
+Clothing	347382	T-shirt	11.95	1	Null	Null	Medium	Cotton
+Clothing	347190	Skirt	22.99	8	Null	Null	Large	Silk

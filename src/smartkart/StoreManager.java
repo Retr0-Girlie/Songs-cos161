@@ -11,6 +11,9 @@ package smartkart;
  */
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 
 public class StoreManager {
@@ -75,6 +78,78 @@ public class StoreManager {
 		scanner.close();
 		return success;
 	}
+	
+    /**Reading tsv file
+     * (Iris)
+     * 
+     * Takes the file and adds it's content to the inventory
+     * 
+     * @param filePath The string of the files location or path
+     */
+    public void FileReader(String filePath) {
+//        int itemCount = 0;
+        
+        try {
+            File file = new File(filePath);
+            Scanner scanner = new Scanner(file);
+            
+            // Skip the header line
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+            
+            // Read each line and create appropriate objects
+            while (scanner.hasNextLine()) {/*May need to add "&& itemCount < 20" back in idk*/
+                String line = scanner.nextLine();
+                String[] parts = line.split("\t");
+                
+                if (parts.length >= 8) {
+                    String type = parts[0];
+                    String itemId = parts[1];
+                    String name = parts[2];
+                    String price = parts[3];
+                    String quantityInStock = parts[4];
+                    String daysTillExpired = parts[5];
+                    String brand = parts[6];
+                    String size = parts[7];
+                    String material = parts[8];
+                    double priceD = Double.valueOf(price);
+                    int days = Integer.valueOf(daysTillExpired);
+                    int quantity = Integer.valueOf(quantityInStock);
+                    
+                    // Create the appropriate type of item
+                    switch (type) {
+                        case "Grocery":
+                            
+                            Product Groc = new Grocery(itemId, name, priceD, quantity, LocalDate.now(), days);
+                            inventory.add(Groc);
+                            break;
+                            
+                        case "Electronic":
+                            
+                            Product Elect = new Electronic(itemId, name, priceD, quantity, brand);
+                            inventory.add(Elect);
+                            break;
+                            
+                        case "Clothing":
+                            Product cloth = new Clothing(itemId, name, priceD, quantity, size, material);
+                            inventory.add(cloth);
+                            break;
+                    }
+//                    itemCount++;
+                }
+            }
+            scanner.close();
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + filePath);
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing number from file");
+            e.printStackTrace();
+        }
+    }
+
 
 	
 

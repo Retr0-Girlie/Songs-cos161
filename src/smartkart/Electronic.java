@@ -29,7 +29,7 @@ public class Electronic extends Product implements Returnable {
 	 * @param double price	The price of the item
 	 * @param int stock		The number of the item currently held in stock
 	 */
-	public Electronic(String id, String name, String brand, double price, int stock)
+	public Electronic(String id, String name, double price, int stock, String brand)
 	{
 		this.id = id;
 		this.name = name;
