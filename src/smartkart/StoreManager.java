@@ -181,32 +181,32 @@ public class StoreManager {
      * (Iris)
      * 
      */
-    public static void selection(Scanner scanner) {
+    public static String selection(Scanner scanner) {
         StoreManager.options();
-        String attempt = scanner.nextLine();
-        int selection1 = Integer.parseInt(attempt);
+        String selection1 = scanner.nextLine();
 
-        if(selection1 == 1) {
+        if(selection1.equals("1")) {
             StoreManager.viewInventory();
-        } else if(selection1 == 2) {
+        } else if(selection1.equals("2")) {
             StoreManager.addToCart(scanner);
-        } else if(selection1 == 3) {
+        } else if(selection1.equals("3")) {
             StoreManager.viewCart();
-        } else if(selection1 == 4) {
+        } else if(selection1.equals("4")) {
             StoreManager.returnItem(scanner);
-        } else if(selection1 == 5) {
+        } else if(selection1.equals("5")) {
             StoreManager.checkout();
         }
+        	String s2 =StoreManager.selection2(scanner);
+        return s2;
     }
     /**for selecting whether to continue in the main menu or not
      * (Iris)
      * 
      * @return 1 to continue or 2 to quit
      */
-    public static int selection2(Scanner scanner) {
+    public static String selection2(Scanner scanner) {
         System.out.println("Enter 1 to return to options or enter 2 to quit:");
-        int number = scanner.nextInt();
-        scanner.nextLine(); // consume leftover newline
+        String number = scanner.nextLine();
         return number;
     }
     

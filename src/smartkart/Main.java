@@ -22,12 +22,12 @@ public class Main {
 		boolean running1 = true;
 		while(running == true) {
 			while(running1 == true) {
-				StoreManager.selection(scanner);
-                int choice = StoreManager.selection2(scanner);
+				//StoreManager.selection(scanner);
+                String choice = StoreManager.selection(scanner);
 
-                if(choice == 1) {
+                if(choice.equals("1")) {
                     running1 = true;
-                } else if(choice == 2) {
+                } else if(choice.equals("2")) {
                     running1 = false;
                     running = false;
                 }else {
