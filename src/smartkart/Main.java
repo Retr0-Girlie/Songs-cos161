@@ -2,13 +2,22 @@ package smartkart;
 
 import java.util.Scanner;
 
+/**Main
+ * (Iris)
+ * Attributes:
+ * -String IrisFilePath is the file path on my computer for the tsv file will need to be changed for other devices
+ * -String MaddyFilePath a empty string for Maddy to save her file path on for the tsv file
+ * -boolean running to keep the program running and allow the end of program
+ * -boolean running2 to keep the methods running
+ */
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		String IrisFilePath = "C:\\Users\\Iris\\Downloads\\Project 1-Cos 161 - Sheet1 (1).tsv";
 		StoreManager.FileReader(IrisFilePath);
-		//ArrayList<Product> test = StoreManager.getInventory();
+//		String MaddyFilePath = "enter path here";
+//		StoreManager.FileReader(MaddyFilePath);
 		boolean running = true;
 		boolean running1 = true;
 		while(running == true) {
@@ -25,7 +34,6 @@ public class Main {
                 }
 
 			}
-			//System.out.println("r1:" + running1 + " r:" + running);
 		}
 		scanner.close();
 
