@@ -85,7 +85,7 @@ public class Clothing extends Product implements Returnable{
 	@Override
 	public double processRefund(int count, String condition) {
 		if (condition.equals("Worn")) {
-			return  0;
+			return  price * 0.9;
 		}else {
 			return price;
 		}
@@ -102,7 +102,7 @@ public class Clothing extends Product implements Returnable{
 	 */
 	@Override
 	public String getReturnLabel(String name, String address) {
-		return name + "\n" + address + "\n	SmartKart" + "\n	123 Road rd" + "\n	Town, ST, 12345-6789";
+		return name + "\n" + address + "\n\n	SmartKart" + "\n	123 Road rd" + "\n	Town, ST, 12345-6789";
 	}
 	
 	/**getting info of a product

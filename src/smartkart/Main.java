@@ -15,14 +15,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		String IrisFilePath = "C:\\Users\\Iris\\Downloads\\Project 1-Cos 161 - Sheet1 (1).tsv";
-		StoreManager.FileReader(IrisFilePath);
-//		String MaddyFilePath = "enter path here";
-//		StoreManager.FileReader(MaddyFilePath);
+//		StoreManager.FileReader(IrisFilePath);
+		String MaddyFilePath = "C:\\Users\\dhigs\\Desktop\\Eclipse Workspace\\Project1-cos161\\src\\smartkart\\Project 1-Cos 161 - Sheet1.tsv";
+		StoreManager.FileReader(MaddyFilePath);
 		boolean running = true;
 		boolean running1 = true;
 		while(running == true) {
 			while(running1 == true) {
-				StoreManager.options();
 				StoreManager.selection(scanner);
                 int choice = StoreManager.selection2(scanner);
 

@@ -84,7 +84,7 @@ public class Electronic extends Product implements Returnable {
 	@Override
 	public String getReturnLabel(String name, String address) 
 	{
-		return name+"\n"+address+"\n	SmartKart"+"\n	123 Road rd"+"\n	Town, ST, 12345-6789";
+		return name+"\n"+address+"\n\n	SmartKart"+"\n	123 Road rd"+"\n	Town, ST, 12345-6789";
 	}
 
 	/**getting info of a product

@@ -124,8 +124,14 @@ public class StoreManager {
                     String size = parts[7];
                     String material = parts[8];
                     double priceD = Double.valueOf(price);
-                    int days = Integer.valueOf(daysTillExpired);
                     int quantity = Integer.valueOf(quantityInStock);
+                    
+                    //Added this check because it was throwing a null pointer exception and breaking the loop when it hit an item with no exp date ~Maddy
+                    int days = 0;
+                    if (type.equals("Grocery"))
+                    {
+                    	days = Integer.valueOf(daysTillExpired);
+                    }
                     
                     // Create the appropriate type of item
                     switch (type) {
@@ -186,9 +192,9 @@ public class StoreManager {
         } else if(selection1 == 3) {
             StoreManager.viewCart();
         } else if(selection1 == 4) {
-            // returns
+            StoreManager.returnItem();
         } else if(selection1 == 5) {
-            // checkout
+            StoreManager.checkout();
         }
     }
     /**for selecting whether to continue in the main menu or not
@@ -201,6 +207,78 @@ public class StoreManager {
         int number = scanner.nextInt();
         scanner.nextLine(); // consume leftover newline
         return number;
+    }
+    
+    /**Calculates total/tax and prints a receipt
+     * (Maddy)
+     * 
+     */
+    public static void checkout()
+    {
+    	double total = 0;
+    	double taxTotal = 0;
+    	double price = 0;
+    	double tax = 0;
+    	
+    	for (CartItem item : cart)
+    	{
+    		price = item.products.getPrice() * item.quantityOfProducts;
+    		tax = item.products.calculateTax(item.quantityOfProducts);
+    		
+    		total += price; 
+    		taxTotal += tax;
+    		
+    		System.out.println(item.products.getName()+"	"+item.quantityOfProducts+"	"+price+"	"+tax);
+    		System.out.println("--------------------------------------------------------------");
+    	}
+    	
+    	System.out.println();
+    	System.out.println("Subtotal: "+total);
+    	System.out.println("Total Tax: "+taxTotal);
+    	System.out.println("Total: "+(total+taxTotal));
+    }
+    
+    public static void returnItem()
+    {
+    	Scanner scn = new Scanner(System.in);
+    	
+    	System.out.println("Enter the ID of the item you'd like to return: ");
+    	String id = scn.nextLine();
+    	
+    	System.out.println("What condition is the item in? (Worn/Open Box/New In Box)");
+    	String condition = scn.nextLine();
+    	
+    	System.out.println("How many of them are you returning?");
+    	int quantity = scn.nextInt();
+    	
+    	System.out.println("How many days ago did you buy it?");
+    	int daysPassed = scn.nextInt();
+		scn.nextLine();
+		
+		boolean itemFound = false;
+
+    	for (Product item : inventory)
+    	{
+    		if (item.getId().equals(id))
+    		{
+    			itemFound = true;
+    			
+    			if (item instanceof Returnable && ((Returnable) item).isEligible(daysPassed))
+    			{
+    				System.out.println("Your return has been accepted. Your refund amount is $"+((Returnable) item).processRefund(quantity, condition)+".");
+    				item.restock(quantity);
+
+    				System.out.println("What is your name?");
+    				String name = scn.nextLine();
+    				System.out.println("What is your address?");
+    				String address = scn.nextLine();
+    				System.out.println(((Returnable) item).getReturnLabel(name, address));
+    				break;
+    			}
+    			else System.out.println("I'm sorry, that item is not eligible for return...");
+    		}
+    	}
+    	if (!itemFound) System.out.println("Sorry, we don't carry any item with that ID...");
     }
     
     //Getters
