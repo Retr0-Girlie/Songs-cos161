@@ -17,7 +17,7 @@ package smartkart;
 import java.time.LocalDate;
 
 public class Grocery extends Product{
-	private LocalDate expirationDate;
+	private LocalDate expirationDate = LocalDate.now();
 	private int timeTillExpiration;
 
 	/**Constructor
@@ -30,12 +30,12 @@ public class Grocery extends Product{
 	 * @param LocalDate expirationDate the day of expiration of the product(Found by taking todays date and adding timeTillExpiration)
 	 * @param int timeTillExpiration	The number of days till a product expires
 	 */
-	public Grocery(String id, String name, double price, int stock, LocalDate expirationDate, int timeTillExpiration) {
+	public Grocery(String id, String name, double price, int stock, int timeTillExpiration) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
-		this.expirationDate = expirationDate.plusDays(timeTillExpiration);
+		this.timeTillExpiration = timeTillExpiration;
 	}
 	/**Calculate Tax
 	 * (Iris)
@@ -59,10 +59,10 @@ public class Grocery extends Product{
 	 * @return returns true if the product is expired else returns false
 	 */
 	public Boolean isExpired() {
-		if(expirationDate.getDayOfYear() > LocalDate.now().getDayOfYear() ) {
-			return true;
+		if(expirationDate.plusDays(timeTillExpiration).getDayOfYear() > expirationDate.getDayOfYear() ) {
+			return false;
 		}else {
-			return false;	
+			return true;	
 		}
 	}
 	
@@ -73,12 +73,12 @@ public class Grocery extends Product{
 	 */
 	@Override
 	public String getInfo(){
-		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\nExpiration date:" + expirationDate + "\n \t ***";
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nStock of item:" + stock + "\nExpiration date:" + expirationDate.plusDays(timeTillExpiration) + "\n \t ***";
 	}
 	
 	//Getters and Setters
 	public LocalDate getExpirationDate() {
-		return expirationDate;
+		return expirationDate.plusDays(timeTillExpiration);
 	}
 
 	public void setExpirationDate(LocalDate expirationDate) {

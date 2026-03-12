@@ -93,7 +93,7 @@ public class Electronic extends Product implements Returnable {
 	 * @return String of information about the product
 	 */
 	public String getInfo(){
-		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\nItem brand:" + brand + "\n \t ***";
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nStock of item:" + stock + "\nItem brand:" + brand + "\n \t ***";
 	}
 	
 	/**Calculate Tax

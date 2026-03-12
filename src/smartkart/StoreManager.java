@@ -1,5 +1,5 @@
 package smartkart;
-/**StoreManager (Interface)
+/**StoreManager 
  * (Iris and Maddy)
  * 
  * The users menu driven console  
@@ -8,26 +8,29 @@ package smartkart;
  * 	-private ArrayList<CartItem> cart;	contains all items in the cart
  * 	-private ArrayList<Product> inventory; Contains all items in the stores inventory
  * 
+ * Methods:
+ * 	-viewCart()	The method for printing all the items in cart
+ *  -viewInventory() The method for printing all the items in inventory
+ *  -addToCart() The method for adding a product to cart returns false if fails
+ *  -FileReader() Used to read the tsv file and set inventory to have values
  */
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
-
 
 public class StoreManager {
-	private ArrayList<CartItem> cart;
-	private ArrayList<Product> inventory;
+	public static ArrayList<CartItem> cart = new ArrayList<CartItem>();
+	public static ArrayList<Product> inventory = new ArrayList<Product>();
 	
 	/**For displaying Cart
 	 * (Iris)
 	 * 
 	 * Prints out all items in the cart
 	 */
-	public void viewCart() {
+	public static void viewCart() {
+		System.out.println("Items in cart \n------------");
 		for (int i = 0; i < cart.size(); i++) {
-			System.out.println("Items in cart \n------------");
 			System.out.println(cart.get(i).getProducts().getInfo());
 		}
 	}
@@ -36,8 +39,8 @@ public class StoreManager {
 	 * 
 	 * Prints out all items in inventory
 	 */
-	public void viewInventory() {
-		System.out.println("Items in inventory \\n------------");
+	public static void viewInventory() {
+		System.out.println("Items in inventory \n------------");
 		for (int i = 0; i < inventory.size(); i++) {
 			System.out.println(inventory.get(i).getInfo());
 		}
@@ -47,35 +50,42 @@ public class StoreManager {
 	 *
 	 *@return	 returns false if it fails due to an invalid entry along the process else returns true
 	 */
-	public boolean addToCart() {
-		Scanner scanner = new Scanner(System.in);
+	public static boolean addToCart(Scanner scanner) {
 		System.out.println("Please enter product ID:");
 		String userIdInput = scanner.nextLine();
+		String error = "";
 		boolean success = false;
 		for(int i = 0; i < inventory.size(); i++) {
 			//checking if product is real
-			if(userIdInput == inventory.get(i).getId()) {
+			if(userIdInput.equals(inventory.get(i).getId())) {
 				System.out.println("Please enter quantity of " + inventory.get(i).getName() + ":");
 				int userQuantityInput = scanner.nextInt();
 				//checking stock and making sure a valid quantity is entered
 				if(userQuantityInput <= inventory.get(i).getStock() && userQuantityInput > 0) {
 					//checking if a grocery product and not expired
-					if(inventory.get(i).isExpired() != null|| inventory.get(i).isExpired() == true) {
+					if(inventory.get(i).isExpired() == false) {
 						inventory.get(i).purchase(userQuantityInput);
 						success = true;
 						CartItem newItem = new CartItem(inventory.get(i), userQuantityInput);
 						cart.add(newItem);
+						System.out.println(userQuantityInput + " " + inventory.get(i).getName() + " added to cart. :3 \n ------------ \n");
 					}else {
-						System.out.println("Error:Item expired");
+						error = ("Error:Item expired");
+						break;
 					}
+					
 				}else {
-					System.out.println("Error:Invalid user input. Enter a positive number or not enough stock");
+					error = ("Error:Invalid user input. Enter a positive number or not enough stock");
+					break;
 				}
 			}else {
-				System.out.println("Error:Invalid user input. ID not found.");
+				//System.out.println(inventory.get(i).getId() + " : " + userIdInput);
+				if(inventory.size() == i) {
+					error = ("Error:Invalid user input. ID not found.");
+				}
 			}
 		}
-		scanner.close();
+		System.out.println(error);
 		return success;
 	}
 	
@@ -86,7 +96,7 @@ public class StoreManager {
      * 
      * @param filePath The string of the files location or path
      */
-    public void FileReader(String filePath) {
+    public static void FileReader(String filePath) {
 //        int itemCount = 0;
         
         try {
@@ -121,7 +131,7 @@ public class StoreManager {
                     switch (type) {
                         case "Grocery":
                             
-                            Product Groc = new Grocery(itemId, name, priceD, quantity, LocalDate.now(), days);
+                            Product Groc = new Grocery(itemId, name, priceD, quantity, days);
                             inventory.add(Groc);
                             break;
                             
@@ -149,8 +159,55 @@ public class StoreManager {
             e.printStackTrace();
         }
     }
+    /**prints out the options menu
+     * (Iris)
+     */
+    public static void options() {
+	    System.out.println("Options:");
+		System.out.println("Enter 1 for view inventory");
+		System.out.println("Enter 2 to add an item to cart");
+		System.out.println("Enter 3 for view cart");
+		System.out.println("Enter 4 for returns");
+		System.out.println("Enter 5 to checkout");
+    }
+    /**for the main part of our menu-acts as home page
+     * (Iris)
+     * 
+     */
+    public static void selection(Scanner scanner) {
+        StoreManager.options();
+        String attempt = scanner.nextLine();
+        int selection1 = Integer.parseInt(attempt);
 
-
-	
-
+        if(selection1 == 1) {
+            StoreManager.viewInventory();
+        } else if(selection1 == 2) {
+            StoreManager.addToCart(scanner);
+        } else if(selection1 == 3) {
+            StoreManager.viewCart();
+        } else if(selection1 == 4) {
+            // returns
+        } else if(selection1 == 5) {
+            // checkout
+        }
+    }
+    /**for selecting whether to continue in the main menu or not
+     * (Iris)
+     * 
+     * @return 1 to continue or 2 to quit
+     */
+    public static int selection2(Scanner scanner) {
+        System.out.println("Enter 1 to return to options or enter 2 to quit:");
+        int number = scanner.nextInt();
+        scanner.nextLine(); // consume leftover newline
+        return number;
+    }
+    
+    //Getters
+    public static ArrayList<Product> getInventory() {
+    		return inventory;
+    }
+    public static ArrayList<CartItem> getCart() {
+		return cart;
+    }
 }

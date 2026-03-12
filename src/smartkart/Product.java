@@ -67,7 +67,7 @@ public abstract class Product {
 	 * @return String of information about the product
 	 */
 	public String getInfo(){
-		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nQuantity of item:" + stock + "\n \t ***";
+		return "Item ID:" + id + "\nItem name:" + name + "\nItem Price:" + price + "\nStock of item:" + stock + "\n \t ***";
 	}
 	
 	/**Is expired
@@ -78,7 +78,7 @@ public abstract class Product {
 	 * @return returns null
 	 */
 	public Boolean isExpired() {
-		return null;
+		return false;
 	}
 	
 	/**Restock
