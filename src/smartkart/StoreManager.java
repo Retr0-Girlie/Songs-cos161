@@ -62,6 +62,7 @@ public class StoreManager {
 				int userQuantityInput = scanner.nextInt();
 				//checking stock and making sure a valid quantity is entered
 				if(userQuantityInput <= inventory.get(i).getStock() && userQuantityInput > 0) {
+					error = "";
 					//checking if a grocery product and not expired
 					if(inventory.get(i).isExpired() == false) {
 						inventory.get(i).purchase(userQuantityInput);
@@ -79,10 +80,7 @@ public class StoreManager {
 					break;
 				}
 			}else {
-				//System.out.println(inventory.get(i).getId() + " : " + userIdInput);
-				if(inventory.size() == i) {
-					error = ("Error:Invalid user input. ID not found.");
-				}
+				error = ("Error:Invalid user input. ID not found.");
 			}
 		}
 		System.out.println(error);
@@ -192,7 +190,7 @@ public class StoreManager {
         } else if(selection1 == 3) {
             StoreManager.viewCart();
         } else if(selection1 == 4) {
-            StoreManager.returnItem();
+            StoreManager.returnItem(scanner);
         } else if(selection1 == 5) {
             StoreManager.checkout();
         }
@@ -238,47 +236,65 @@ public class StoreManager {
     	System.out.println("Total: "+(total+taxTotal));
     }
     
-    public static void returnItem()
-    {
-    	Scanner scn = new Scanner(System.in);
-    	
-    	System.out.println("Enter the ID of the item you'd like to return: ");
-    	String id = scn.nextLine();
-    	
-    	System.out.println("What condition is the item in? (Worn/Open Box/New In Box)");
-    	String condition = scn.nextLine();
-    	
-    	System.out.println("How many of them are you returning?");
-    	int quantity = scn.nextInt();
-    	
-    	System.out.println("How many days ago did you buy it?");
-    	int daysPassed = scn.nextInt();
-		scn.nextLine();
-		
-		boolean itemFound = false;
-
-    	for (Product item : inventory)
-    	{
-    		if (item.getId().equals(id))
-    		{
-    			itemFound = true;
-    			
-    			if (item instanceof Returnable && ((Returnable) item).isEligible(daysPassed))
-    			{
-    				System.out.println("Your return has been accepted. Your refund amount is $"+((Returnable) item).processRefund(quantity, condition)+".");
-    				item.restock(quantity);
-
-    				System.out.println("What is your name?");
-    				String name = scn.nextLine();
-    				System.out.println("What is your address?");
-    				String address = scn.nextLine();
-    				System.out.println(((Returnable) item).getReturnLabel(name, address));
-    				break;
-    			}
-    			else System.out.println("I'm sorry, that item is not eligible for return...");
-    		}
-    	}
-    	if (!itemFound) System.out.println("Sorry, we don't carry any item with that ID...");
+    /**r proccesses a return 
+     * (Maddy and Iris)
+     * 
+     * 
+     * @param scn taking in a scanner for use
+     */
+    public static void returnItem(Scanner scn)
+    {	
+		String error = "";
+		System.out.println("Enter the ID of the item you'd like to return: ");
+    		String id = scn.nextLine();
+	    	for (int i = 0; i < inventory.size(); i++)
+	    	{
+	    		if (inventory.get(i).getId().equals(id))
+	    		{
+	    			System.out.println("How many days ago did you buy it?");
+	    	    		int daysPassed = scn.nextInt();
+	    	    		scn.nextLine();
+	    			//scn.nextLine();
+	    	    		if(daysPassed > 0) {
+		    		if (inventory.get(i) instanceof Returnable && ((Returnable) inventory.get(i)).isEligible(daysPassed))
+	 			{
+		        		System.out.println("What condition is the item in? (Worn/Open Box/New In Box)");
+		        		String condition = scn.nextLine();
+		        		if(condition.toLowerCase().equals("worn")||condition.toLowerCase().equals("open box") ||condition.toLowerCase().equals("new in box")) {
+		        			System.out.println("How many of them are you returning?");
+		        	    		int quantity = scn.nextInt();
+		        	    		scn.nextLine();
+		        	    		if(quantity >0) {
+				    			System.out.println("Your return has been accepted. Your refund amount is $"+((Returnable) inventory.get(i)).processRefund(quantity, condition)+".");
+				    			inventory.get(i).restock(quantity);
+				    			System.out.println("What is your name?");
+				    			String name = scn.nextLine();
+				    			System.out.println("What is your address?");
+				    			String address = scn.nextLine();
+				    			System.out.println(((Returnable) inventory.get(i)).getReturnLabel(name, address));
+				    			error = "";
+				    			break;
+		        	    		}else {
+		        	    			error =("Apologies, that is not a postivive quantity");
+		        	    			break;
+		        	    		}
+		        		} else {
+		        			error = ("Apologies, that is not an accepted condition");
+		        			break;
+		        		}
+		    		}else {
+		    			error = ("I'm sorry, that item is not eligible for return...");
+		    			break;
+		    		}
+	    	    		}else {
+	    	    			error = ("Apologies, that is not a postivive quantity");
+	    	    			break;
+	    	    		}
+	    		}else {
+	    			error = ("Sorry, invalid item ID");
+	    		}
+	    	}
+	    	System.out.println(error);
     }
     
     //Getters

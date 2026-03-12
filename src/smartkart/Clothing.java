@@ -50,7 +50,8 @@ public class Clothing extends Product implements Returnable{
 	 */
 	@Override
 	public double calculateTax(int count) {
-		return (price * count) * 0.05;
+		double number = (price * count) * 0.05;
+		return Math.round(number*100.0)/100.0;
 	}
 
 	/**Is Eligible For Return
