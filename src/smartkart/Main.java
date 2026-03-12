@@ -30,6 +30,8 @@ public class Main {
                 } else if(choice == 2) {
                     running1 = false;
                     running = false;
+                }else {
+                		System.out.println("Invalid input returning to option menu \n");
                 }
 
 			}

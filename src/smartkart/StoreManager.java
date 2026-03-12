@@ -60,16 +60,19 @@ public class StoreManager {
 			if(userIdInput.equals(inventory.get(i).getId())) {
 				System.out.println("Please enter quantity of " + inventory.get(i).getName() + ":");
 				int userQuantityInput = scanner.nextInt();
+				error = "";
 				//checking stock and making sure a valid quantity is entered
 				if(userQuantityInput <= inventory.get(i).getStock() && userQuantityInput > 0) {
 					error = "";
 					//checking if a grocery product and not expired
 					if(inventory.get(i).isExpired() == false) {
+						error = "";
 						inventory.get(i).purchase(userQuantityInput);
 						success = true;
 						CartItem newItem = new CartItem(inventory.get(i), userQuantityInput);
 						cart.add(newItem);
 						System.out.println(userQuantityInput + " " + inventory.get(i).getName() + " added to cart. :3 \n ------------ \n");
+						break;
 					}else {
 						error = ("Error:Item expired");
 						break;
@@ -220,6 +223,8 @@ public class StoreManager {
     	
     	for (CartItem item : cart)
     	{
+    		System.out.println(item.products.getStock()-item.quantityOfProducts);
+    		item.products.setStock(item.products.getStock()-item.quantityOfProducts);
     		price = item.products.getPrice() * item.quantityOfProducts;
     		tax = item.products.calculateTax(item.quantityOfProducts);
     		
@@ -229,7 +234,7 @@ public class StoreManager {
     		System.out.println(item.products.getName()+"	"+item.quantityOfProducts+"	"+price+"	"+tax);
     		System.out.println("--------------------------------------------------------------");
     	}
-    	
+    	cart.clear();
     	System.out.println();
     	System.out.println("Subtotal: "+total);
     	System.out.println("Total Tax: "+taxTotal);
@@ -260,10 +265,12 @@ public class StoreManager {
 	 			{
 		        		System.out.println("What condition is the item in? (Worn/Open Box/New In Box)");
 		        		String condition = scn.nextLine();
+		        		error = "";
 		        		if(condition.toLowerCase().equals("worn")||condition.toLowerCase().equals("open box") ||condition.toLowerCase().equals("new in box")) {
 		        			System.out.println("How many of them are you returning?");
 		        	    		int quantity = scn.nextInt();
 		        	    		scn.nextLine();
+		        	    		error = "";
 		        	    		if(quantity >0) {
 				    			System.out.println("Your return has been accepted. Your refund amount is $"+((Returnable) inventory.get(i)).processRefund(quantity, condition)+".");
 				    			inventory.get(i).restock(quantity);
